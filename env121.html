@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Secret Life of Gum</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CORE STYLES --- */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #000000;
+            color: #f5f5f7;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Responsive Hero */
+        .hero-section {
+            height: 100vh;
+            /* Shorter min-height for mobile landscape */
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Responsive Grid */
+        .stage-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Default to stack (Mobile) */
+            gap: 3rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            align-items: center;
+        }
+
+        /* Laptop/Tablet Breakpoint */
+        @media (min-width: 768px) {
+            .stage-grid {
+                grid-template-columns: 1fr 1fr; /* Side by side */
+                gap: 5rem;
+                padding: 0 3rem;
+            }
+        }
+
+        /* --- ANIMATIONS & EFFECTS --- */
+        .reveal-text {
+            opacity: 1; 
+            transform: translateY(0);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .reveal-text.hidden-init {
+            opacity: 0.1;
+            transform: translateY(30px);
+        }
+
+        /* Responsive Parallax Wrapper */
+        .parallax-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+            background: #111;
+            /* Mobile Height */
+            height: 40vh; 
+        }
+
+        /* Desktop Height */
+        @media (min-width: 768px) {
+            .parallax-wrapper {
+                height: 65vh;
+                border-radius: 32px;
+            }
+        }
+        
+        .parallax-image {
+            width: 100%;
+            height: 120%;
+            object-fit: cover;
+            position: absolute;
+            top: -10%;
+            left: 0;
+            will-change: transform;
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .text-gradient {
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glow Effects */
+        .glow-blob {
+            position: absolute;
+            width: 80vw;
+            height: 80vw;
+            max-width: 600px;
+            max-height: 600px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="antialiased bg-black text-white">
+
+    <!-- NAV (Responsive) -->
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0 rounded-none bg-black/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="text-sm font-bold tracking-wide uppercase text-white/90 flex items-center">
+                <i class="fa-solid fa-circle-notch text-pink-500 mr-2 animate-spin-slow"></i> 
+                <span>Lifecycle</span>
+            </div>
+            <!-- Links hidden on mobile, visible on tablet+ -->
+            <div class="hidden md:flex gap-8 text-xs font-medium text-gray-400">
+                <a href="#stage-1" class="hover:text-white transition-colors">Extraction</a>
+                <a href="#stage-2" class="hover:text-white transition-colors">Production</a>
+                <a href="#stage-3" class="hover:text-white transition-colors">Usage</a>
+                <a href="#stage-4" class="hover:text-white transition-colors">Waste</a>
+            </div>
+            <!-- Simple Mobile Indicator -->
+            <div class="md:hidden text-xs text-gray-500 uppercase tracking-wider">
+                Scroll Down
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero-section">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black z-10"></div>
+            <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2670&auto=format&fit=crop" 
+                 alt="Texture" 
+                 class="w-full h-full object-cover opacity-50 animate-pulse"
+                 style="animation-duration: 8s;">
+        </div>
+
+        <div class="relative z-10 text-center px-6 max-w-5xl space-y-6">
+            <!-- Responsive Font Sizes: text-5xl on mobile, 9xl on desktop -->
+            <h1 class="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter leading-tight md:leading-none reveal-text hidden-init">
+                Sweet. <br>
+                <span class="text-gradient">Synthetic.</span>
+            </h1>
+            <p class="text-lg sm:text-xl md:text-3xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed reveal-text hidden-init" style="transition-delay: 0.2s;">
+                The untold story of how crude oil becomes your chewing gum.
+            </p>
+            <div class="pt-8 reveal-text hidden-init" style="transition-delay: 0.4s;">
+                <a href="#stage-1" class="inline-flex items-center gap-2 text-xs md:text-sm uppercase tracking-widest text-gray-500 hover:text-white transition-colors p-4">
+                    Explore <i class="fa-solid fa-arrow-down animate-bounce"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-10 pb-20 md:pb-40">
+
+        <!-- STAGE 1 -->
+        <section id="stage-1" class="relative py-12 md:py-24">
+            <div class="glow-blob bg-pink-900 top-20 left-0 transform -translate-x-1/2"></div>
+            
+            <div class="stage-grid">
+                <!-- Text Column -->
+                <div class="space-y-6 md:space-y-8 z-10 order-2 md:order-1">
+                    <div>
+                        <span class="text-pink-500 font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2 block">Stage 01</span>
+                        <h2 class="text-4xl md:text-7xl font-bold tracking-tight mb-4 md:mb-6 reveal-text hidden-init">
+                            From the <br> Depths.
+                        </h2>
+                        <p class="text-base md:text-xl text-gray-400 leading-relaxed reveal-text hidden-init">
+                            Gum doesn't start in a forest. It starts in an oil field. The primary ingredient is <strong class="text-white">Polyisobutylene</strong>.
+                        </p>
+                    </div>
+                    
+                    <div class="glass-panel p-5 md:p-6 reveal-text hidden-init border-l-4 border-pink-500">
+                        <h4 class="text-white font-bold text-lg mb-1">Industrial Grade</h4>
+                        <p class="text-sm text-gray-400">
+                            This synthetic rubber is the exact same material used to make inner tubes for car tires.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Image Column -->
+                <div class="parallax-wrapper order-1 md:order-2">
+                    <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2400&auto=format&fit=crop" 
+                         alt="Oil" class="parallax-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- STAGE 2 -->
+        <section id="stage-2" class="relative py-12 md:py-24">
+            <div class="stage-grid">
+                <!-- Image Column -->
+                <div class="parallax-wrapper order-1">
+                    <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?q=80&w=2574&auto=format&fit=crop" 
+                         alt="Production" class="parallax-image">
+                </div>
+
+                <!-- Text Column -->
+                <div class="space-y-6 md:space-y-8 z-10 order-2 md:text-left">
+                    <div>
+                        <span class="text-blue-500 font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2 block">Stage 02</span>
+                        <h2 class="text-4xl md:text-7xl font-bold tracking-tight mb-4 md:mb-6 reveal-text hidden-init">
+                            The Synthetic <br> Cocktail.
+                        </h2>
+                        <p class="text-base md:text-xl text-gray-400 leading-relaxed reveal-text hidden-init">
+                            Hard rubber pellets are melted in vats. To mask the taste of plastic, factories introduce a potent mix.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="glass-panel p-4 flex items-center justify-between reveal-text hidden-init">
+                            <span class="text-gray-300 text-sm md:text-base">Waxes & Oils</span>
+                            <span class="text-[10px] md:text-xs font-bold text-blue-400 uppercase">Softness</span>
+                        </div>
+                        <div class="glass-panel p-4 flex items-center justify-between reveal-text hidden-init">
+                            <span class="text-gray-300 text-sm md:text-base">Sweeteners</span>
+                            <span class="text-[10px] md:text-xs font-bold text-blue-400 uppercase">Flavor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAGE 3 -->
+        <section id="stage-3" class="relative py-12 md:py-24">
+            <div class="glow-blob bg-green-900 top-1/2 right-0 transform translate-x-1/2"></div>
+
+            <div class="stage-grid">
+                <!-- Text Column -->
+                <div class="space-y-6 md:space-y-8 z-10 order-2 md:order-1">
+                    <div>
+                        <span class="text-green-500 font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2 block">Stage 03</span>
+                        <h2 class="text-4xl md:text-7xl font-bold tracking-tight mb-4 md:mb-6 reveal-text hidden-init">
+                            Impulse <br> Design.
+                        </h2>
+                        <p class="text-base md:text-xl text-gray-400 leading-relaxed reveal-text hidden-init">
+                            Placed at checkout lanes. You chew for 20 minutes, swallow the sugar, and are left with the rubber base.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-panel p-4 md:p-6 text-center reveal-text hidden-init">
+                            <div class="text-2xl md:text-3xl font-bold text-white">20m</div>
+                            <div class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Usage</div>
+                        </div>
+                        <div class="glass-panel p-4 md:p-6 text-center reveal-text hidden-init">
+                            <div class="text-2xl md:text-3xl font-bold text-white">∞</div>
+                            <div class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Waste</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Column -->
+                <div class="parallax-wrapper order-1 md:order-2">
+                    <img src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?q=80&w=2535&auto=format&fit=crop" 
+                         alt="Store" class="parallax-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- STAGE 4 -->
+        <section id="stage-4" class="relative py-12 md:py-24">
+            <div class="stage-grid">
+                <!-- Image Column -->
+                <div class="parallax-wrapper order-1">
+                    <img src="https://images.unsplash.com/photo-1463780324318-d1a8ddc05a11?q=80&w=2669&auto=format&fit=crop" 
+                         alt="Pollution" class="parallax-image filter grayscale contrast-125">
+                </div>
+
+                <!-- Text Column -->
+                <div class="space-y-6 md:space-y-8 z-10 order-2 md:text-left">
+                    <div>
+                        <span class="text-red-500 font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2 block">Stage 04</span>
+                        <h2 class="text-4xl md:text-7xl font-bold tracking-tight mb-4 md:mb-6 reveal-text hidden-init">
+                            The Forever <br> Stain.
+                        </h2>
+                        <p class="text-base md:text-xl text-gray-400 leading-relaxed reveal-text hidden-init">
+                            It doesn't go away. It mummifies in landfills for 500 years or becomes a permanent scar on our streets.
+                        </p>
+                    </div>
+
+                    <div class="glass-panel p-6 border border-red-500/30 reveal-text hidden-init">
+                        <h3 class="text-lg md:text-xl font-bold text-white mb-2">Linear Economy</h3>
+                        <div class="flex items-center justify-start gap-3 text-gray-400">
+                            <span>Take</span> <i class="fa-solid fa-arrow-right text-red-500 text-xs"></i>
+                            <span>Make</span> <i class="fa-solid fa-arrow-right text-red-500 text-xs"></i>
+                            <span class="text-white font-bold">Waste</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-24 bg-black text-center relative border-t border-white/10">
+        <div class="relative z-10 max-w-xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Break the Cycle.</h2>
+            <p class="text-base md:text-lg text-gray-400 mb-8">Check the label. If it doesn't say "Natural Chicle," you're chewing plastic.</p>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                    class="px-8 py-4 bg-white text-black rounded-full font-bold text-sm hover:bg-gray-200 transition-colors">
+                Back to Top
+            </button>
+        </div>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Text Reveal Setup
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('hidden-init');
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal-text').forEach(el => observer.observe(el));
+
+            // 2. Responsive Parallax Effect
+            const images = document.querySelectorAll('.parallax-image');
+            
+            function onScroll() {
+                // Disable parallax slightly on mobile for better performance, 
+                // or keep it subtle. Here we keep it but with safety checks.
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+
+                images.forEach(img => {
+                    const rect = img.parentElement.getBoundingClientRect();
+                    // Check if parent is in viewport
+                    if (rect.top < windowHeight && rect.bottom > 0) {
+                        // Calculate relative position (0 to 1)
+                        const relativePos = (windowHeight - rect.top) / (windowHeight + rect.height);
+                        // Map to translation
+                        const move = (relativePos - 0.5) * 40; 
+                        img.style.transform = `translateY(${move}px)`;
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', () => {
+                requestAnimationFrame(onScroll);
+            });
+            
+            // Trigger once on load
+            onScroll();
+        });
+    </script>
+</body>
+</html>
